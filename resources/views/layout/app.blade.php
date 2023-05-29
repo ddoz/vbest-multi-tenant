@@ -1,0 +1,130 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<title>Vendorbest | Vendor Management System</title>
+	
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+	<meta name="robots" content="noindex, nofollow">
+	<meta name="googlebot" content="noindex, nofollow">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	
+	<link rel="icon" href="{{ asset('assets/img/vendorbest-favicon.png')}}" type="image/png">
+	
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap"> 
+	
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lykmapipo/themify-icons@0.1.2/css/themify-icons.css">
+	
+	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="{{ asset('assets/css/vendor.css')}}">
+
+	<!-- DataTables -->
+	<link href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css" rel="stylesheet">
+    <link href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css" rel="stylesheet">
+
+	<!-- TagsInput -->
+	<link rel="stylesheet" href="{{asset('assets/tagsinput/tagsinput.css')}}">
+
+	<!-- Datepicker -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css"  />
+	
+	<!-- Select2 -->
+	<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.slim.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"></script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/js/bootstrap.min.js"></script>
+	
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
+	<script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+
+	<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+	<script src="{{asset('assets/tagsinput/tagsinput.js')}}"></script>
+
+	<script>
+	$().ready(function() {
+		$('input').attr('autocomplete', 'off');
+		$('.datepicker').datepicker({
+			format: 'yyyy-mm-dd',
+			autoclose: true
+		});
+		window.setTimeout(function() {
+            $(".alertstatus").fadeTo(500, 0).slideUp(500, function(){
+                $(this).remove();
+            });
+        }, 3000);
+		$(".select2").select2();
+	});
+	</script>
+</head>
+<body>
+	<main>
+		<nav id="sidebar">
+			<div class="sidebar-logo mb-3">
+				<a href="{{url('/')}}"><img src="{{ asset('assets/img/vendorbest-logo-white.png')}}" width="150px"></a>
+			</div>
+			<ul class="nav flex-column">
+				<li class="nav-item">
+					<a class="nav-link {{ (request()->segment(1) == '') ? 'active' : '' }}" href="{{url('/')}}"><i class="ti ti-microsoft-alt"></i> Dasboard</a>
+				</li>
+				@if(Auth::user()->role == 'ADMIN')
+				<li class="nav-item">
+					<a class="nav-link {{ (request()->segment(1) == 'verifikasi') ? 'active' : '' }}" href="{{route('verifikasi')}}"><i class="ti ti-check"></i> Verifikasi Data</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href=""><i class="ti ti-check"></i> Master </a>
+				</li>
+				@else
+
+				{{MenuManagers::listMenu()}}
+
+				@endif
+
+			</ul>
+		</nav>
+		<div id="content">
+			<nav class="navbar navbar-expand-lg fixed-top">
+				<button class="btn btn-primary" id="btn-toggle">...</button>
+				<div class="collapse navbar-collapse">
+					<ul class="nav navbar-nav ml-auto">
+						<li class="nav-item dropdown">
+							<a class="nav-link dropdown-toggle" href="#" id="accountDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+								<i class="ti ti-user"></i> {{Auth::user()->name}}
+							</a>
+							<div class="dropdown-menu dropdown-menu-right" aria-labelledby="accountDropdown">
+								<a class="dropdown-item" href="{{route('profil')}}"><i class="ti ti-id-badge"></i> Profil</a>
+								<a class="dropdown-item" href="{{route('profil.password')}}"><i class="ti ti-key"></i> Ubah Password</a>
+								<div class="dropdown-divider"></div>
+								<a class="dropdown-item" href="{{ route('logout') }}"
+                                       	onclick="event.preventDefault();
+                                        document.getElementById('logout-form').submit();"><i class="ti ti-power-off"></i> Logout</a>
+								<form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                    @csrf
+                                </form>
+							</div>
+						</li>
+					</ul>
+				</div>
+			</nav>
+			
+			<div id="content-body" class="row m-2">
+				@yield('content')
+			</div>
+		</div>
+	</main>
+	
+	<script>
+	$().ready(function() {
+		$('#btn-toggle').click(function() {
+			$('#sidebar, #content').toggleClass('hide-sidebar');
+		});
+	});
+	</script>
+
+	@yield('script')
+</body>
+</html>

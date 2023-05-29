@@ -1,0 +1,89 @@
+@extends('layout/app')
+
+@section('content')
+				<div class="col-sm-12">
+					<div class="card card-wrapper">
+						<div class="card-header">
+							Sertifikat
+						</div>
+						<div class="card-body">
+							@if(Session::has('success'))
+							<div class="alert alert-success alertstatus">
+								{{ Session::get('success') }}
+								@php
+									Session::forget('success');
+								@endphp
+							</div>
+							@endif
+							@if(Session::has('fail'))
+								<div class="alert alert-danger alertstatus">
+									{{ Session::get('fail') }}
+									@php
+										Session::forget('fail');
+									@endphp
+								</div>
+							@endif
+							<div class="d-flex flex-row justify-content-between">
+								<div>
+									<a href="{{route('sertifikasi.create')}}" class="btn btn-primary">
+										<i class="ti ti-plus"></i> Tambah Data
+									</a>
+									
+								</div>
+								<button type="button" class="btn btn-outline-info">
+									<i class="ti ti-filter"></i> Filter Data
+								</button>
+							</div>
+
+							<div class="table-responsive mt-4">
+								<table id="sertifikasiDatatables" class="table table-striped" style="width:100%">
+									<thead>
+										<tr>
+											<th>No</th>
+											<th>Opsi</th>
+											<th>Verified</th>
+											<th>Jenis Sertifikat</th>
+											<th>Nomor</th>
+											<th>Berlaku Sampai</th>
+											<th>Tgl Input</th>
+											<th>Tgl Update</th>
+											<th>Lampiran</th>
+										</tr>
+									</thead>
+									<tbody></tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+@endsection
+
+@section('script')
+<script type="text/javascript">
+  $(function () {
+	$(document).ready(function() {
+		console.log('a');
+		var table = $('#sertifikasiDatatables').DataTable({
+			processing: true,
+			serverSide: true,
+			stateSave: true,
+			ajax: "{{ route('sertifikasi.index') }}",
+			columns: [
+				{data: 'DT_RowIndex', name: 'DT_RowIndex'},
+				{data: 'action', name: 'action', orderable: false, searchable: false},
+				{data: 'status_dokumen', name: 'status_dokumen'},
+				{data: 'jenis_sertifikat', name: 'jenis_sertifikat'},
+				{data: 'nomor', name: 'nomor'},
+				{data: 'berlaku_sampai', name: 'berlaku_sampai'},
+				{data: 'created_at', name: 'created_at'},
+				{data: 'updated_at', name: 'updated_at'},
+				{data: 'lampiran', name: 'lampiran', orderable: false, searchable: false},
+			],
+			fixedColumns: true
+
+		});
+	})
+  });
+
+</script>
+@endsection

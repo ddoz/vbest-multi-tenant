@@ -1,0 +1,134 @@
+body {
+	background: #edf1f5;
+	font: 12px/18px 'Open Sans';
+}
+a {
+	color: #2ba8e0;
+}
+[class*=-primary] {
+	background: #2ba8e0 !important;
+}
+
+.navbar {
+	background: #2ba8e0 !important;
+}
+
+.bg-sidebar {
+	background: #c9eeff !important;
+	color: #000 !important;
+}
+
+.bg-sidebar a {
+	color: #000 !important;
+}
+
+.active {
+	background: #2ba8e0 !important;
+	padding-left: 8px !important;
+}
+
+a.active {
+	color: #c9eeff !important;
+	font-weight: bold;
+}
+
+.panel-label {
+	font-size:0.8rem;
+	margin-top:5px
+}
+
+.nav-link{
+    color: #ffffff !important;
+}
+
+.dropdown-item {
+    color: #212529 !important;
+}
+
+#content {
+	padding-bottom: 15px;
+	min-height: 100vh;
+	position: absolute;
+	top: 0;
+	right: 0;
+	transition: all 0.3s;
+}
+#content.hide-sidebar {
+	width: 100%;
+}
+#content .navbar {
+	background: #c9eeff;
+	margin-top: 230px;
+	position: fixed;
+	top: 0;
+	right: 0;
+	transition: all 0.3s;
+	z-index: 10;
+}
+
+#accountDropdown {
+	color: #0b5890;
+}
+.dropdown-menu {
+	border-top: 0;
+	border-top-left-radius: 0;
+	border-top-right-radius: 0;
+	font-size: 12px;
+	padding: .3rem 0;
+	top: 40px;
+}
+.dropdown-item {
+	padding: .4rem 1.8rem .4rem 1.25rem;
+}
+.dropdown-item:hover {
+	background: #c9eeff;
+	color: #000 !important;
+}
+.dropdown-divider {
+	margin: .3rem 0;
+}
+#content-body {
+	margin-top: 70px !important;
+}
+.card.card-wrapper {
+	border: 0;
+}
+.card.card-wrapper .card-header {
+	background: #fff;
+	font-size: 17px;
+	font-weight: 600;
+	padding-top: 17px;
+	padding-bottom: 17px;
+}
+.col-form-label {
+	color: #505050;
+	padding-right: 0;
+	text-align: right;
+}
+.form-control {
+	border-color: #bec4ca;
+	font-size: 12px;
+}
+.btn {
+	border: 0 !important;
+	font-size: 13px;
+	font-weight: 600;
+}
+.btn .ti {
+	margin-right: 3px;
+}
+.verified-by {
+	color: #585;
+	font-size: 11px;
+	margin-top: -15px;
+	margin-bottom: 20px;
+}
+.verified-by .ti {
+	margin-right: 2px;
+}
+.custom-checkbox > .custom-control-label.custom-line-height {
+  line-height: 24px;
+}
+textarea.form-control {
+	min-height: 103px;
+}
