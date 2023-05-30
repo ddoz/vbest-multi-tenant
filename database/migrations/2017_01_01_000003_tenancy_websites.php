@@ -27,6 +27,8 @@ class TenancyWebsites extends AbstractMigration
 
             $table->string('uuid');
 
+            $table->string('email');
+            $table->string('name');
             $table->timestamps();
             $table->softDeletes();
         });

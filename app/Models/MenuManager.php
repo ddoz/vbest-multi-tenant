@@ -9,4 +9,15 @@ use Hyn\Tenancy\Traits\UsesTenantConnection;
 class MenuManager extends Model
 {
     use HasFactory, UsesTenantConnection;
+
+    protected $fillable = [
+        "menu",
+        "icon",
+        "route",
+    ];
+
+    protected $casts = [
+        'created_at' => 'datetime:Y-m-d H:i:s',
+        'updated_at' => 'datetime:Y-m-d H:i:s',
+    ];
 }

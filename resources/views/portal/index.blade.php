@@ -50,9 +50,18 @@
 
                             @if(Session::has('success'))
 							<div class="alert alert-success alertstatus">
-								{{ Session::get('success') }}
+								{!!Session::get('success')!!}
 								@php
 									Session::forget('success');
+								@endphp
+							</div>
+							@endif
+
+							@if(Session::has('fail'))
+							<div class="alert alert-success alertstatus">
+								{{ Session::get('fail') }}
+								@php
+									Session::forget('fail');
 								@endphp
 							</div>
 							@endif
@@ -71,6 +80,10 @@
 								<div class="form-label-group">
 									<input type="email" name="email" id="email" class="form-control @error('email') is-invalid @enderror" placeholder="Email" autofocus required>
 									<label for="email">Email</label>
+								</div>
+								<div class="form-label-group">
+									<input type="password" name="password" id="password" class="form-control @error('password') is-invalid @enderror" placeholder="Password" required>
+									<label for="password">Password</label>
 								</div>
 								<div class="form-label-group">
 									<input type="text" name="nama" id="nama" class="form-control @error('nama') is-invalid @enderror" placeholder="Nama" required>

@@ -70,16 +70,11 @@
 					<li class="nav-item">
 						<a class="nav-link {{ (request()->segment(1) == 'verifikasi') ? 'active' : '' }}" href="{{route('verifikasi')}}"><i class="ti ti-check"></i> Verifikasi Data</a>
 					</li>
-					<li class="nav-item dropdown">
-						<a class="nav-link dropdown-toggle" href="#" id="masterDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-							<i class="ti ti-settings"></i> Master
-						</a>
-						<div class="dropdown-menu dropdown-menu-right" aria-labelledby="masterDropdown">
-							<a class="dropdown-item" href="{{route('profil')}}"><i class="ti ti-id-badge"></i> Profil</a>
-							<a class="dropdown-item" href="{{route('profil.password')}}"><i class="ti ti-key"></i> Ubah Password</a>
-							<div class="dropdown-divider"></div>
-							
-						</div>
+					<li class="nav-item">
+						<a class="nav-link {{ (request()->segment(1) == 'master') ? 'active' : '' }}" href="{{route('master.index')}}"><i class="ti ti-list"></i> Master </a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link {{ (request()->segment(1) == 'pengaturan') ? 'active' : '' }}" href="{{route('pengaturan.index')}}"><i class="ti ti-settings"></i> Pengaturan </a>
 					</li>
 				</ul>			
 				<ul class="nav navbar-nav ml-auto">

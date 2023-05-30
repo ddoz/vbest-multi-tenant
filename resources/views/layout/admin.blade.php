@@ -71,7 +71,10 @@
 						<a class="nav-link {{ (request()->segment(1) == 'verifikasi') ? 'active' : '' }}" href="{{route('verifikasi')}}"><i class="ti ti-check"></i> Verifikasi Data</a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link" href=""><i class="ti ti-settings"></i> Master </a>
+						<a class="nav-link {{ (request()->segment(1) == 'master') ? 'active' : '' }}" href="{{route('master.index')}}"><i class="ti ti-list"></i> Master </a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link {{ (request()->segment(1) == 'pengaturan') ? 'active' : '' }}" href="{{route('pengaturan.index')}}"><i class="ti ti-settings"></i> Pengaturan </a>
 					</li>
 				</ul>
 				<ul class="nav navbar-nav ml-auto">
