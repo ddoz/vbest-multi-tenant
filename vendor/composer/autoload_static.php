@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInita6ce57bfde957af93f4636e5579993c6
+class ComposerStaticInit26c237635981babe7ea02947c724cd88
 {
     public static $files = array (
         '0e6d7bf4a5811bfa5cf40c5ccd6fae6a' => __DIR__ . '/..' . '/symfony/polyfill-mbstring/bootstrap.php',
@@ -390,8 +390,8 @@ class ComposerStaticInita6ce57bfde957af93f4636e5579993c6
         ),
         'Psr\\Http\\Message\\' => 
         array (
-            0 => __DIR__ . '/..' . '/psr/http-factory/src',
-            1 => __DIR__ . '/..' . '/psr/http-message/src',
+            0 => __DIR__ . '/..' . '/psr/http-message/src',
+            1 => __DIR__ . '/..' . '/psr/http-factory/src',
         ),
         'Psr\\Http\\Client\\' => 
         array (
@@ -1356,6 +1356,8 @@ class ComposerStaticInita6ce57bfde957af93f4636e5579993c6
         'Aws\\MediaConvert\\MediaConvertClient' => __DIR__ . '/..' . '/aws/aws-sdk-php/src/MediaConvert/MediaConvertClient.php',
         'Aws\\MediaLive\\Exception\\MediaLiveException' => __DIR__ . '/..' . '/aws/aws-sdk-php/src/MediaLive/Exception/MediaLiveException.php',
         'Aws\\MediaLive\\MediaLiveClient' => __DIR__ . '/..' . '/aws/aws-sdk-php/src/MediaLive/MediaLiveClient.php',
+        'Aws\\MediaPackageV2\\Exception\\MediaPackageV2Exception' => __DIR__ . '/..' . '/aws/aws-sdk-php/src/MediaPackageV2/Exception/MediaPackageV2Exception.php',
+        'Aws\\MediaPackageV2\\MediaPackageV2Client' => __DIR__ . '/..' . '/aws/aws-sdk-php/src/MediaPackageV2/MediaPackageV2Client.php',
         'Aws\\MediaPackageVod\\Exception\\MediaPackageVodException' => __DIR__ . '/..' . '/aws/aws-sdk-php/src/MediaPackageVod/Exception/MediaPackageVodException.php',
         'Aws\\MediaPackageVod\\MediaPackageVodClient' => __DIR__ . '/..' . '/aws/aws-sdk-php/src/MediaPackageVod/MediaPackageVodClient.php',
         'Aws\\MediaPackage\\Exception\\MediaPackageException' => __DIR__ . '/..' . '/aws/aws-sdk-php/src/MediaPackage/Exception/MediaPackageException.php',
@@ -5967,6 +5969,7 @@ class ComposerStaticInita6ce57bfde957af93f4636e5579993c6
         'Psy\\Sudo' => __DIR__ . '/..' . '/psy/psysh/src/Sudo.php',
         'Psy\\Sudo\\SudoVisitor' => __DIR__ . '/..' . '/psy/psysh/src/Sudo/SudoVisitor.php',
         'Psy\\SuperglobalsEnv' => __DIR__ . '/..' . '/psy/psysh/src/SuperglobalsEnv.php',
+        'Psy\\SystemEnv' => __DIR__ . '/..' . '/psy/psysh/src/SystemEnv.php',
         'Psy\\TabCompletion\\AutoCompleter' => __DIR__ . '/..' . '/psy/psysh/src/TabCompletion/AutoCompleter.php',
         'Psy\\TabCompletion\\Matcher\\AbstractContextAwareMatcher' => __DIR__ . '/..' . '/psy/psysh/src/TabCompletion/Matcher/AbstractContextAwareMatcher.php',
         'Psy\\TabCompletion\\Matcher\\AbstractDefaultParametersMatcher' => __DIR__ . '/..' . '/psy/psysh/src/TabCompletion/Matcher/AbstractDefaultParametersMatcher.php',
@@ -7592,10 +7595,10 @@ class ComposerStaticInita6ce57bfde957af93f4636e5579993c6
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInita6ce57bfde957af93f4636e5579993c6::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInita6ce57bfde957af93f4636e5579993c6::$prefixDirsPsr4;
-            $loader->prefixesPsr0 = ComposerStaticInita6ce57bfde957af93f4636e5579993c6::$prefixesPsr0;
-            $loader->classMap = ComposerStaticInita6ce57bfde957af93f4636e5579993c6::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInit26c237635981babe7ea02947c724cd88::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit26c237635981babe7ea02947c724cd88::$prefixDirsPsr4;
+            $loader->prefixesPsr0 = ComposerStaticInit26c237635981babe7ea02947c724cd88::$prefixesPsr0;
+            $loader->classMap = ComposerStaticInit26c237635981babe7ea02947c724cd88::$classMap;
 
         }, null, ClassLoader::class);
     }
