@@ -22,7 +22,7 @@ class PortalController extends Controller
     }
 
     public function register(Request $request) {
-
+        
         $request->validate([
             "email"                 => 'required|email',
             "nama"                  => 'required',
@@ -35,12 +35,22 @@ class PortalController extends Controller
             "nama.required"         => "Nama harus diisi.",
             "subdomain.required"    => "Subdomain harus diisi.",
             "perusahaan.required"   => 'Perusahaan harus diisi.',
-
         ]);
 
         try {
-            // This will be the complete website name (tenantUser.mysite.com)
             $fqdn = sprintf('%s.%s', $request->subdomain, "vendorbest.test");
+
+            //cek email dan subdomain
+            $website = Website::where('email',$request->email);
+            if($website->exists()) {
+                return response()->json(['msg'=>'Email Sudah Terdaftar.'],422);
+            }
+            $domain = Hostname::where('fqdn', $fqdn);
+            if($domain->exists()) {
+                return response()->json(['msg'=>'Domain Tidak Dapat Digunakan.'],422);
+            }
+
+            // This will be the complete website name (tenantUser.mysite.com)
             // The website object will save the tenant instance information
             // I recommend to use something random for security reasons
             $website = new Website;
@@ -54,16 +64,15 @@ class PortalController extends Controller
             $hostname = app(HostnameRepository::class)->create($hostname);
             app(HostnameRepository::class)->attach($hostname, $website);
 
-            // Mendapatkan website (tenant) berdasarkan hostname
-            $hostnames = app(HostnameRepository::class)->findByHostname($fqdn);
-            $websites = $hostnames->website;
-            // Mendapatkan konfigurasi koneksi database tenant
+            // // Mendapatkan website (tenant) berdasarkan hostname
+            // $hostnames = app(HostnameRepository::class)->findByHostname($fqdn);
+            // $websites = $hostnames->website;
+            // // Mendapatkan konfigurasi koneksi database tenant
             // $config = $websites->database->getConfiguration();
             DB::connection('tenant')->statement('insert into users (name,email,password,role) values (?, ?, ?, ?)', [$request->nama, $request->email, bcrypt($request->password), "ADMIN"]);
-   
-            return back()->with("success","Registrasi Berhasil. Silahkan Kunjungi <a href='http://".$fqdn."'>$fqdn</a> kemudian login dan ikuti proses selanjutnya untuk aktivasi.");
+            return response()->json(['status'=>'success', 'message'=>"Registrasi Berhasil. Silahkan Kunjungi <a href='http://".$fqdn."'>$fqdn</a> kemudian login dan ikuti proses selanjutnya untuk aktivasi."]);
         }catch(\Exception $e) {
-            return back()->with("fail","Registrasi Gagal. Pastikan email belum pernah terdaftar sebelumnya.");
+            return response()->json(['status'=>'fail','message'=>$e]);
         }
     }
 }

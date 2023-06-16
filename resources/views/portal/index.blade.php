@@ -37,45 +37,15 @@
 						<div class="col-md-9 col-lg-8 mx-auto">
 							<img src="{{asset('assets/img/vendorbest-logo-colour.png')}}" width="80%" class="mx-auto d-block mb-5">
 							
-							@error('email')
-							<div class="alert alert-danger alertstatus">
-                                {{ $message }}
+							<div id="failState" style="display:none" class="alert alert-danger alertstatus">
+								
 							</div>
-							@enderror
-                            @error('password')
-                            <div class="alert alert-danger alertstatus">
-                                {{ $message }}
-							</div>
-                            @enderror
 
-                            @if(Session::has('success'))
-							<div class="alert alert-success alertstatus">
-								{!!Session::get('success')!!}
-								@php
-									Session::forget('success');
-								@endphp
-							</div>
-							@endif
-
-							@if(Session::has('fail'))
-							<div class="alert alert-success alertstatus">
-								{{ Session::get('fail') }}
-								@php
-									Session::forget('fail');
-								@endphp
-							</div>
-							@endif
-
-							@if(Session::has('message'))
-							<div class="alert alert-success alertstatus">
-								{{ Session::get('message') }}
-								@php
-									Session::forget('message');
-								@endphp
-							</div>
-							@endif
+							<div id="successState" style="display:none" class="alert alert-success alertstatus">
 							
-							<form action="{{route('register.office')}}" method="POST">
+							</div>							
+							
+							<form id="formRegis">
                                 @csrf
 								<div class="form-label-group">
 									<input type="email" name="email" id="email" class="form-control @error('email') is-invalid @enderror" placeholder="Email" autofocus required>
@@ -91,7 +61,7 @@
 								</div>
 								<div class="form-label-group">
 									<input type="text" name="perusahaan" id="perusahaan" class="form-control @error('perusahaan') is-invalid @enderror" placeholder="Perusahaan" required>
-									<label for="nama">Nama Perusahaan</label>
+									<label for="perusahaan">Nama Perusahaan</label>
 								</div>
                                 <div class="row">
                                     <div class="form-label-group col-md-8">
@@ -102,8 +72,12 @@
                                         .vendorbest.com
                                     </div>
                                 </div>
-								<button class="btn btn-lg btn-primary btn-block btn-login text-uppercase font-weight-bold mb-2" type="submit">
-									Daftar
+								<button id="btnSubmit" class="btn btn-lg btn-primary btn-block btn-login text-uppercase font-weight-bold mb-2" type="submit">
+									<div id="textDaftar">Daftar</div>
+									<div id="loader" style="display:none !important" class="d-flex align-items-center">
+										<strong>Loading...</strong>
+										<div class="spinner-border ml-auto" role="status" aria-hidden="true"></div>
+									</div>
 								</button>
 							</form>
 							
@@ -114,5 +88,46 @@
 		</div>
 	</div>
 </div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
+
+<script>
+	
+	function startLoad() {
+		$("#btnSubmit").attr('disabled','disabled');
+		$("#textDaftar").hide();
+		$("#loader").show();
+	}
+	function finishLoad() {
+		$("#btnSubmit").removeAttr('disabled');
+		$("#textDaftar").show();
+		$("#loader").hide();
+		$("#loader").attr('style','display:none !important');
+	}
+	$("#formRegis").submit(function(e) {
+		e.preventDefault();
+		startLoad();
+		var form = new FormData($('#formRegis')[0]);
+		$.ajax({
+			url: "{{route('register.office')}}",
+			type: "POST",
+			data: $(this).serialize(),
+			success: function(res) {
+				console.log(res);
+				$("#successState").show();
+				$("#failState").hide();
+				$("#successState").html(res.msg);
+				finishLoad();
+			},
+			error: function(err) {
+				var res = JSON.parse(err.responseText);
+				console.log(res);
+				$("#failState").show();
+				$("#successState").hide();
+				$("#failState").html(res.msg);
+				finishLoad();
+			}
+		})
+	})
+</script>
 </body>
 </html>
