@@ -71,10 +71,10 @@ class PortalController extends Controller
             // $config = $websites->database->getConfiguration();
             DB::connection('tenant')->statement('insert into users (name,email,password,role) values (?, ?, ?, ?)', [$request->nama, $request->email, bcrypt($request->password), "ADMIN"]);
 
-            Config::set('app.url', $fqdn);
-            $user['email'] = $request->email;
-            $user['name'] = $request->nama;
-            event(new Registered($user));
+            // Config::set('app.url', $fqdn);
+            // $user['email'] = $request->email;
+            // $user['name'] = $request->nama;
+            // event(new Registered($user));
 
             return response()->json(['status'=>'success', 'message'=>"Registrasi Berhasil. Silahkan Kunjungi <a href='http://".$fqdn."'>$fqdn</a> kemudian login dan ikuti proses selanjutnya untuk aktivasi."]);
         }catch(\Exception $e) {
