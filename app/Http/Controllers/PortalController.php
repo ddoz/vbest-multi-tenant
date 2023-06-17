@@ -38,7 +38,7 @@ class PortalController extends Controller
         ]);
 
         try {
-            $fqdn = sprintf('%s.%s', $request->subdomain, "vendorbest.test");
+            $fqdn = sprintf('%s.%s', $request->subdomain, "vbest.my.id");
 
             //cek email dan subdomain
             $website = Website::where('email',$request->email);
@@ -70,6 +70,12 @@ class PortalController extends Controller
             // // Mendapatkan konfigurasi koneksi database tenant
             // $config = $websites->database->getConfiguration();
             DB::connection('tenant')->statement('insert into users (name,email,password,role) values (?, ?, ?, ?)', [$request->nama, $request->email, bcrypt($request->password), "ADMIN"]);
+
+            Config::set('app.url', $fqdn);
+            $user['email'] = $request->email;
+            $user['name'] = $request->nama;
+            event(new Registered($user));
+
             return response()->json(['status'=>'success', 'message'=>"Registrasi Berhasil. Silahkan Kunjungi <a href='http://".$fqdn."'>$fqdn</a> kemudian login dan ikuti proses selanjutnya untuk aktivasi."]);
         }catch(\Exception $e) {
             return response()->json(['status'=>'fail','message'=>$e]);
