@@ -18,6 +18,8 @@ return new class extends Migration
             $table->string("menu");
             $table->string("icon");
             $table->string("route");
+            $table->string('is_required')->default("1");
+            $table->string('hide')->default("0");
             $table->timestamps();
         });
     }

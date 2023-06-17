@@ -97,7 +97,6 @@
 							</a>
 							<div class="dropdown-menu dropdown-menu-right" aria-labelledby="accountDropdown">
 								<a class="dropdown-item" href="{{route('profil')}}"><i class="ti ti-id-badge"></i> Profil</a>
-								<a class="dropdown-item" href="{{route('profil.password')}}"><i class="ti ti-key"></i> Ubah Password</a>
 								<div class="dropdown-divider"></div>
 								<a class="dropdown-item" href="{{ route('logout') }}"
                                        	onclick="event.preventDefault();

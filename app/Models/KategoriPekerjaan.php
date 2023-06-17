@@ -9,4 +9,8 @@ use Hyn\Tenancy\Traits\UsesTenantConnection;
 class KategoriPekerjaan extends Model
 {
     use HasFactory, UsesTenantConnection;
+
+    protected $fillable = [
+        "nama_kategori"
+    ];
 }

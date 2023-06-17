@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\DB;
 use App\Models\JenisKepemilikan;
+use App\Models\Pemilik;
 use DataTables;
 use Auth;
 use Carbon\Carbon;
@@ -18,10 +19,9 @@ class JenisKepemilikanController extends Controller
             $data = JenisKepemilikan::get();
             return DataTables::of($data)->addIndexColumn()
                 ->addColumn('action', function($row){
-                    $btn = '<div class="d-flex flex-row"><form onsubmit="return confirm(\'Hapus Data?\')" class="formDelete" action="'.route('master-bank.destroy',$row->id).'" method="POST">
+                    $btn = '<div class="d-flex flex-row"><form onsubmit="return confirm(\'Hapus Data?\')" class="formDelete" action="'.route('master-jenis-kepemilikan.destroy',$row->id).'" method="POST">
                                 <button type="submit" class="btn btn-danger btn-sm"><span class="ti ti-trash"></span></button>
-                                <a class="btn btn-primary btn-sm" href="'.route('master-bank.edit',$row->id).'"><span class="ti ti-pencil"></span></a>
-                                <a class="btn btn-success btn-sm" href="'.route('master-bank.show',$row->id).'"><span class="ti ti-search"></span></a>
+                                <a class="btn btn-primary btn-sm" href="'.route('master-jenis-kepemilikan.edit',$row->id).'"><span class="ti ti-pencil"></span></a>
                                 '.csrf_field().'
                                 <input type="hidden" name="_method" value="DELETE" autocomplete="off">
                             </form></div>';
@@ -38,119 +38,65 @@ class JenisKepemilikanController extends Controller
     }
 
     public function create() {
-        $bank = Bank::all();
-        return view('rekening-bank/create', compact('bank'));
+        return view('admin.master.jeniskepemilikan.create');
     }
     
     public function store(Request $request) {
         $validatedData = $request->validate([
-            'bank_id'        => 'required',
-            'nomor_rekening' => 'required',
-            'nama'           => 'required',
-            'scan_dokumen'               => 'required|mimes:jpg,png,bmp,pdf|max:10000',
+            'nama_jenis'           => 'required',
         ],[
-            'bank_id.required'          => 'Bank harus dipilih.',
-            'nomor_rekening.required'   => 'Nomor Rekening harus diisi.',
-            'nama.required'             => 'Nama harus diisi.',
-            'scan_dokumen.required'             => 'Scan dokumen harus diisi.',
-            'scan_dokumen.mimes'             => 'Scan dokumen harus berupa jpg,png,bmp,pdf.',
-            'scan_dokumen.max'             => 'Scan dokumen maksimal 10MB.',
-        ]);
-        
-        $validatedData['keterangan']    = $request->keterangan;
-        $validatedData['user_id']       = Auth::user()->id;
+            'nama_jenis.required'             => 'Nama Jenis harus diisi.',
+        ]);        
         
         try {
-            if ($request->hasFile('scan_dokumen')) { 
-
-                $file = $request->file('scan_dokumen');
-                $extension  = $file->getClientOriginalExtension(); 
-                $name = time() .'_' . Str::random(8) . '.' . $extension;
-                $filePath = 'rekening-bank/' . $name;
-                Storage::disk('s3')->put($filePath, file_get_contents($file));
-                Storage::disk('s3')->setVisibility($filePath, "public"); 
-                $validatedData['scan_dokumen']  = $filePath;
-
-                RekeningBank::create($validatedData);
-                return back()->with('success', 'Rekening Bank berhasil disimpan.');
-            } else{
-                return back()->with('fail', 'Rekening Bank gagal disimpan. Gagal Upload File.')->withInput();
-            }
+           
+            JenisKepemilikan::create($validatedData);
+            return back()->with('success', 'Jenis Kepemilikan berhasil disimpan.');
             
         } catch(\Exception $e) {
-            return back()->with('fail', 'Rekening Bank gagal disimpan. ' . $e->getMessage())->withInput();
+            return back()->with('fail', 'Jenis Kepemilikan gagal disimpan. ' . $e->getMessage())->withInput();
         }
 
     }
 
-    public function show(RekeningBank $rekening_bank)
+    public function edit($id)
     {
-        return view('rekening-bank.show',compact('rekening_bank'));
+        $jeniskepemilikan = JenisKepemilikan::find($id);  
+        return view('admin.master.jeniskepemilikan.edit',compact('jeniskepemilikan'));
     }
 
-    public function edit(RekeningBank $rekening_bank)
-    {
-        // Check if data is owned by user login
-        if($rekening_bank->user_id != Auth::user()->id) return redirect()->route('rekening_bank.index');
-        $bank = Bank::all();
-        return view('rekening-bank.edit',compact('rekening_bank','bank'));
-    }
-
-    public function update(Request $request, RekeningBank $rekening_bank) {
+    public function update(Request $request, $id) {
         $validatedData = $request->validate([
-            'bank_id'        => 'required',
-            'nomor_rekening' => 'required',
-            'nama'           => 'required',
+            'jenis_kepemilikan_id'        => 'required',
+            'nama_jenis' => 'required',
         ],[
-            'bank_id.required'          => 'Bank harus dipilih.',
-            'nomor_rekening.required'   => 'Nomor Rekening harus diisi.',
-            'nama.required'             => 'Nama harus diisi.',
+            'jenis_kepemilikan_id.required'          => 'Nama Jenis Kepemilikan harus dipilih.',
+            'nama_jenis.required'   => 'Nama Jenis Kepemilikan harus diisi.',
         ]);
         
-        $validatedData['keterangan']    = $request->keterangan;
-        $validatedData['user_id']       = Auth::user()->id;
-
         try {
             $validatedData['updated_at'] = Carbon::now();
-            if ($request->hasFile('scan_dokumen')) {
-                
-                $request->validate([
-                    'scan_dokumen'              => 'mimes:jpg,png,bmp,pdf|max:10000',
-                ],[
-                    'scan_dokumen.mimes'        => 'Dokumen harus berupa jpg, png, bmp atau pdf',
-                    'scan_dokumen.max'          => 'Dokumen maksimal 10MB', 
-                ]);
+            
+            $ji = JenisKepemilikan::find($id);
+            $ji->fill($validatedData)->save();
 
-                // delete eksisting file di cloud
-                Storage::disk('s3')->delete($rekening_bank->scan_dokumen);
-
-                $file = $request->file('scan_dokumen');
-                $extension  = $file->getClientOriginalExtension(); 
-                $name = time() .'_' . Str::random(8) . '.' . $extension;
-                $filePath = 'rekening-bank/' . $name;
-                Storage::disk('s3')->put($filePath, file_get_contents($file));
-                Storage::disk('s3')->setVisibility($filePath, "public"); 
-                $validatedData['scan_dokumen']  = $filePath;                
-            } 
-            $rekening_bank->fill($validatedData)->save();
-
-            return redirect()->route('rekening-bank.index')->with('success', 'Rekening Bank berhasil diubah.');
+            return redirect()->route('master-jenis-kepemilikan.index')->with('success', 'Jenis Kepemilikan Usaha berhasil diubah.');
         } catch(\Exception $e) {
-            return redirect()->route('rekening-bank.index')->with('fail', 'Rekening Bank gagal diubah. ' . $e->getMessage())->withInput();
+            return redirect()->route('master-jenis-kepemilikan.index')->with('fail', 'Jenis Kepemilikan Usaha gagal diubah. ' . $e->getMessage())->withInput();
         }
 
     }
 
-    public function destroy(RekeningBank $rekening_bank) {
-        // Delete file di storage cloud
-        // script here
+    public function destroy($id) {
         try {
-            Storage::disk('s3')->delete($rekening_bank->scan_dokumen);
-            $rekening_bank->delete();
-            return redirect()->route('rekening-bank.index')->with('success', 'Rekening Bank berhasil dihapus.');
+            $pemilik = Pemilik::where('jenis_kepemilikan_id',$id);
+            if($pemilik->exists()) { return back()->with('fail', 'Gagal dihapus. Karena Terdapat Pada Pemilik')->withInput(); }
+            $jeniskepemilikan = JenisKepemilikan::find($id);
+            $jeniskepemilikan->delete();
+            return redirect()->route('master-jenis-kepemilikan.index')->with('success', 'Jenis Kepemilikan berhasil dihapus.');
 
         } catch(Exception $e) {
-            return back()->with('fail', 'Rekening Bank gagal dihapus. ' . $e->getMessage())->withInput();
+            return back()->with('fail', 'Jenis Izin gagal dihapus. ' . $e->getMessage())->withInput();
         }
     }
 }

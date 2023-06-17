@@ -115,7 +115,7 @@
 				console.log(res);
 				$("#successState").show();
 				$("#failState").hide();
-				$("#successState").html(res.msg);
+				$("#successState").html(res.message);
 				finishLoad();
 			},
 			error: function(err) {

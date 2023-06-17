@@ -10,6 +10,11 @@ class KualifikasiBidang extends Model
 {
     use HasFactory, UsesTenantConnection;
 
+    protected $fillable = [
+        "nama_kualifikasi",
+        "parent_id"
+    ];
+
     function parent() {
         return $this->belongsTo("App\Models\KualifikasiBidang");
     }

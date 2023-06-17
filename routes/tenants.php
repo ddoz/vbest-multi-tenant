@@ -57,7 +57,8 @@ Route::middleware(['web'])->group(function () {
         Route::get('/', [App\Http\Controllers\HomesController::class, 'index'])->name('home');
         Route::get('/home', [App\Http\Controllers\HomesController::class, 'index'])->name('home');
         Route::get('/profil', [App\Http\Controllers\ProfilController::class, 'index'])->name('profil');
-        Route::get('/profil/password', [App\Http\Controllers\ProfilController::class, 'password'])->name('profil.password');
+        Route::post('/profil/update', [App\Http\Controllers\ProfilController::class, 'update'])->name('profil.update');
+        Route::post('/profil/password', [App\Http\Controllers\ProfilController::class, 'password'])->name('profil.password');
         
 
         Route::middleware(['vendorAccess'])->group(function () {
@@ -78,6 +79,9 @@ Route::middleware(['web'])->group(function () {
 
         Route::middleware(['adminAccess'])->group(function () {
             Route::resource('pengaturan', "App\Http\Controllers\SiteController");
+            Route::post('/pengaturan-menu/change', [App\Http\Controllers\SiteController::class, "changeMenu"])->name('pengaturan-menu.change');
+            Route::get('/pengaturan-site', [App\Http\Controllers\SiteController::class, "site"])->name('pengaturan-site.index');
+            Route::post('/pengaturan-site/store', [App\Http\Controllers\SiteController::class, "storeSite"])->name('pengaturan-site.store');
 
             Route::resource('master', "App\Http\Controllers\MasterController");
             Route::resource('master-bank', 'App\Http\Controllers\Master\BankController');

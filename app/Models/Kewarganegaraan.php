@@ -9,4 +9,8 @@ use Hyn\Tenancy\Traits\UsesTenantConnection;
 class Kewarganegaraan extends Model
 {
     use HasFactory, UsesTenantConnection;
+
+    protected $fillable = [
+        "nama_kewarganegaraan"
+    ];
 }

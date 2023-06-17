@@ -9,4 +9,8 @@ use Hyn\Tenancy\Traits\UsesTenantConnection;
 class JenisTenagaAhli extends Model
 {
     use HasFactory, UsesTenantConnection;
+
+    protected $fillable = [
+        "nama"
+    ];
 }

@@ -16,7 +16,6 @@
 									<thead>
 										<tr>
                                             <th>No</th>
-                                            <th>Opsi</th>
 											<th>Nama Menu</th>
 										</tr>
 									</thead>
@@ -38,7 +37,6 @@
 			ajax: "{{ route('master.index') }}",
 			columns: [
 				{data: 'DT_RowIndex', name: 'DT_RowIndex'},
-				{data: 'action', name: 'action', orderable: false, searchable: false},
 				{data: 'menu', name: 'menu'},
 			]
 		});

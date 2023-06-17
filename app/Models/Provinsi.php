@@ -9,4 +9,8 @@ use Hyn\Tenancy\Traits\UsesTenantConnection;
 class Provinsi extends Model
 {
     use HasFactory, UsesTenantConnection;
+
+    protected $fillable = [
+        "provinsi"
+    ];
 }

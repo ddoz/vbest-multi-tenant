@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\User;
+use Auth;
+use Hash;
 
 class ProfilController extends Controller
 {
@@ -13,7 +16,13 @@ class ProfilController extends Controller
      */
     public function index()
     {
-        //
+        $profil = User::find(Auth::user()->id);
+        if(Auth::user()->role=='ADMIN') {
+            return view("profil.admin", compact('profil'));
+        }
+        if(Auth::user()->role=='VENDOR') {
+            return view("profil.vendor", compact('profil'));
+        }
     }
 
     /**
@@ -21,74 +30,38 @@ class ProfilController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function password()
+    public function update(Request $request)
     {
-        //
+        $request->validate([
+            'name' => 'required'
+        ],[
+            'name.required' => 'Nama Tidak Boleh Kosong'
+        ]);
+
+        $user = User::find(Auth::user()->id);
+        $user->name = $request->name;
+        $user->save();
+        return back()->with('success', 'Profil berhasil disimpan.');
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
+    public function password(Request $request) {
+        $request->validate([
+            'old' => 'required',
+            'new' => 'required|min:6',
+        ],[
+            'old.required' => 'Password Lama Tidak Boleh Kosong',
+            'new.required' => 'Password Baru Tidak Boleh Kosong',
+            'new.min' => 'Password Baru Tidak Boleh Kurang dari 6',
+        ]);
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
+        $user = User::find(Auth::user()->id);
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
+        if(password_verify($request->old,$user->password)) {
+            $user->password = Hash::make($request->new);
+            $user->save();
+        }else {
+            return back()->with('fail', 'Password Lama Tidak Sesuai.');
+        }        
+        return back()->with('success', 'Profil berhasil disimpan.');
     }
 }

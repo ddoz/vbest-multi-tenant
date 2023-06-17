@@ -9,4 +9,13 @@ use Hyn\Tenancy\Traits\UsesTenantConnection;
 class Kabupaten extends Model
 {
     use HasFactory, UsesTenantConnection;
+
+    protected $fillable = [
+        "kabupaten",
+        "provinsi_id"
+    ];
+
+    function provinsi() {
+        return $this->belongsTo('App\Models\Provinsi');
+    }
 }

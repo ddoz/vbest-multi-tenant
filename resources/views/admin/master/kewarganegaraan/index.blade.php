@@ -14,6 +14,22 @@
 							</div>
 						</div>
 						<div class="card-body">
+							@if(Session::has('success'))
+								<div class="alert alert-success alertstatus">
+									{{ Session::get('success') }}
+										@php
+										Session::forget('success');
+									@endphp
+								</div>
+							@endif
+							@if(Session::has('fail'))
+								<div class="alert alert-danger alertstatus">
+									{{ Session::get('fail') }}
+									@php
+										Session::forget('fail');
+									@endphp
+								</div>
+							@endif
 							<div class="table-responsive">
 								<table id="izinDatatables" style="width:100%" class="table table-striped">
 									<thead>

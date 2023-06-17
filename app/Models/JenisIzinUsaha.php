@@ -9,4 +9,8 @@ use Hyn\Tenancy\Traits\UsesTenantConnection;
 class JenisIzinUsaha extends Model
 {
     use HasFactory, UsesTenantConnection;
+
+    protected $fillable = [
+        'jenis_izin'
+    ];
 }
