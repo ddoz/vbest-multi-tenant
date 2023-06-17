@@ -150,7 +150,8 @@ class HomesController extends Controller
       return User::create([
         'name' => $data['name'],
         'email' => $data['email'],
-        'password' => Hash::make($data['password'])
+        'password' => Hash::make($data['password']),
+        'email_verified_at' => date("Y-m-d H:i:s") //bypass dulu
       ]);
     }
 }
