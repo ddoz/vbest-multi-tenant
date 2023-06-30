@@ -5,6 +5,7 @@ declare(strict_types=1);
 use Stancl\Tenancy\Database\Models\Domain;
 
 return [
+    'url' => env('APP_URL'),
     'tenant_model' => \App\Models\Tenant::class,
     'id_generator' => Stancl\Tenancy\UUIDGenerator::class,
 
