@@ -8,7 +8,7 @@ use Hyn\Tenancy\Traits\UsesTenantConnection;
 
 class Kelurahan extends Model
 {
-    use HasFactory, UsesTenantConnection;
+    use HasFactory;
 
     protected $fillable = [
         "kelurahan",

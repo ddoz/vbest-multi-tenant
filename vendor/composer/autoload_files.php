@@ -34,6 +34,7 @@ return array(
     '801c31d8ed748cfa537fa45402288c95' => $vendorDir . '/psy/psysh/src/functions.php',
     'ec07570ca5a812141189b1fa81503674' => $vendorDir . '/phpunit/phpunit/src/Framework/Assert/Functions.php',
     '320163ac6b93aebe3dc25b60a0533d56' => $vendorDir . '/spatie/laravel-ignition/src/helpers.php',
+    'f36d7ea9144e9f8ff76be0eaaff1ee80' => $vendorDir . '/stancl/tenancy/src/helpers.php',
     '0b47d6d4a00ca9112ba3953b49e7c9a4' => $vendorDir . '/yajra/laravel-datatables-oracle/src/helper.php',
     '9f1c51fd8ab26dd416ccd65eac19ffc1' => $baseDir . '/app/Helpers/MenuManagers.php',
 );

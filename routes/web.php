@@ -32,6 +32,14 @@ use App\Http\Controllers\Auth\ForgotPasswordController;
 Route::get('/', [App\Http\Controllers\PortalController::class, 'index'])->name('join');
 Route::post('register-office', [App\Http\Controllers\PortalController::class, 'register'])->name('register.office');
 
+Route::get('/testing', function() {
+    $user = new App\Models\User;
+    $user->name = "Adam Japal";
+    $user->email = "adam.japal@gmail.com";
+    $user->password = password_hash("123456789", PASSWORD_BCRYPT);
+    $user->domain = "demo";
+    $user->save();
+});
 // Auth::routes();
 
 // Route::get('forget-password', [ForgotPasswordController::class, 'showForgetPasswordForm'])->name('forget.password.get');

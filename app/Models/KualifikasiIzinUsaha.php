@@ -8,7 +8,7 @@ use Hyn\Tenancy\Traits\UsesTenantConnection;
 
 class KualifikasiIzinUsaha extends Model
 {
-    use HasFactory, UsesTenantConnection;
+    use HasFactory;
 
     protected $fillable = [
         'kualifikasi_bidang_id',

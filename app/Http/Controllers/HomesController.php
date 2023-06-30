@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Auth\Events\Registered;
 use Auth;
 use Hash;
+use Illuminate\Support\Str;
 
 class HomesController extends Controller
 {
@@ -97,9 +98,12 @@ class HomesController extends Controller
         DB::beginTransaction();
 
         try {
-
-            $data = $request->only('name','email','password');
-            $user = $this->create($data);
+            $user = new User();
+            $user->name = $request->name;
+            $user->email = $request->email;
+            $user->password = Hash::make($request->password);
+            $user->domain = "demo_".Str::random(5);
+            $user->save();
 
             $userId = $user->id;
 
@@ -123,7 +127,7 @@ class HomesController extends Controller
                 'nama_pic'             => $request->fax,
                 'telp_pic'             => $request->telp_pic,
                 'alamat_pic'           => $request->alamat_pic,                
-                'user_id'              => $userId,                
+                'user_id'              => $userId, 
             ]);
 
             DB::commit();

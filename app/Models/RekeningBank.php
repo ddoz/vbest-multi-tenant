@@ -8,7 +8,7 @@ use Hyn\Tenancy\Traits\UsesTenantConnection;
 
 class RekeningBank extends Model
 {
-    use HasFactory, UsesTenantConnection;
+    use HasFactory;
     
     protected $fillable = [
         "bank_id",

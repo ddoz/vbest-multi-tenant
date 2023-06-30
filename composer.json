@@ -16,6 +16,7 @@
         "laravel/tinker": "^2.7",
         "laravel/ui": "^4.2",
         "league/flysystem-aws-s3-v3": "^3.15",
+        "stancl/tenancy": "^3.7",
         "tenancy/db-driver-mysql": "^2.1",
         "yajra/laravel-datatables-oracle": "~9.0"
     },

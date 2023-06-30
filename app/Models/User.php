@@ -11,7 +11,7 @@ use Hyn\Tenancy\Traits\UsesTenantConnection;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
-    use HasApiTokens, HasFactory, Notifiable, UsesTenantConnection;
+    use HasApiTokens, HasFactory, Notifiable;
 
     /**
      * The attributes that are mass assignable.
@@ -22,6 +22,8 @@ class User extends Authenticatable implements MustVerifyEmail
         'name',
         'email',
         'password',
+        'domain',
+        'tenant_id'
     ];
 
     /**
@@ -46,5 +48,22 @@ class User extends Authenticatable implements MustVerifyEmail
     function identitas_vendor() {
         return $this->hasOne("App\Models\IdentitasVendor");
     }
+
+    // public static function booted() {
+    //     static::created(function($user){
+    //         $userTenant = Tenant::create(['id' => $user->domain]);
+    //         $userTenant->domains()->create(['domain' => $user->domain . "." . env("APP_DOMAIN")]);
+    //         $userTenant->run(function () use ($user) {
+    //             $user = User::create([
+    //                 'name' => $user->name,
+    //                 'email' => $user->email,
+    //                 'password' => $user->password,
+    //                 'domain' => $user->domain                   
+    //             ]);
+    //             event(new Registered($user));
+    //         });
+            
+    //     });
+    // }
 
 }

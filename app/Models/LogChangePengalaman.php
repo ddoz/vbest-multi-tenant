@@ -8,7 +8,7 @@ use Hyn\Tenancy\Traits\UsesTenantConnection;
 
 class LogChangePengalaman extends Model
 {
-    use HasFactory, UsesTenantConnection;
+    use HasFactory;
 
     protected $table = "log_change_pengalaman";
 

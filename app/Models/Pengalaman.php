@@ -8,7 +8,7 @@ use Hyn\Tenancy\Traits\UsesTenantConnection;
 
 class Pengalaman extends Model
 {
-    use HasFactory, UsesTenantConnection;
+    use HasFactory;
 
     protected $table = "pengalaman";
 
