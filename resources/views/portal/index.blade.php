@@ -35,43 +35,71 @@
 				<div class="container">
 					<div class="row">
 						<div class="col-md-9 col-lg-8 mx-auto">
-							<img src="{{asset('assets/img/vendorbest-logo-colour.png')}}" width="80%" class="mx-auto d-block mb-5">
+							<img src="{{asset('assets/img/vendorbest-logo-colour.png')}}" width="80%" class="mx-auto d-block mb-5">											
 							
-							<div id="failState" style="display:none" class="alert alert-danger alertstatus">
-								
+							@if(Session::has('success'))
+							<div class="alert alert-success alertstatus">
+								{{ Session::get('success') }}
+								@php
+									Session::forget('success');
+								@endphp
 							</div>
+							@endif
+							@if(Session::has('fail'))
+								<div class="alert alert-danger alertstatus">
+									{{ Session::get('fail') }}
+									@php
+										Session::forget('fail');
+									@endphp
+								</div>
+							@endif
 
-							<div id="successState" style="display:none" class="alert alert-success alertstatus">
-							
-							</div>							
-							
-							<form id="formRegis">
+							<form action="{{route('register.office')}}" method="POST">
                                 @csrf
 								<div class="form-label-group">
-									<input type="email" name="email" id="email" class="form-control @error('email') is-invalid @enderror" placeholder="Email" autofocus required>
+									<input value="{{old('email')}}" type="email" name="email" id="email" class="form-control @error('email') is-invalid @enderror" placeholder="Email" autofocus required>
 									<label for="email">Email</label>
+									@if ($errors->has('email'))
+										<span class="text-danger">{{ $errors->first('email') }}</span>
+									@endif
+								</div>
+								<div>
+
 								</div>
 								<div class="form-label-group">
 									<input type="password" name="password" id="password" class="form-control @error('password') is-invalid @enderror" placeholder="Password" required>
 									<label for="password">Password</label>
+									@if ($errors->has('password'))
+										<span class="text-danger">{{ $errors->first('password') }}</span>
+									@endif
 								</div>
 								<div class="form-label-group">
-									<input type="text" name="nama" id="nama" class="form-control @error('nama') is-invalid @enderror" placeholder="Nama" required>
+									<input value="{{old('nama')}}" type="text" name="nama" id="nama" class="form-control @error('nama') is-invalid @enderror" placeholder="Nama" required>
 									<label for="nama">Nama</label>
+									@if ($errors->has('nama'))
+										<span class="text-danger">{{ $errors->first('nama') }}</span>
+									@endif
 								</div>
 								<div class="form-label-group">
-									<input type="text" name="perusahaan" id="perusahaan" class="form-control @error('perusahaan') is-invalid @enderror" placeholder="Perusahaan" required>
+									<input value="{{old('perusahaan')}}" type="text" name="perusahaan" id="perusahaan" class="form-control @error('perusahaan') is-invalid @enderror" placeholder="Perusahaan" required>
 									<label for="perusahaan">Nama Perusahaan</label>
+									@if ($errors->has('perusahaan'))
+										<span class="text-danger">{{ $errors->first('perusahaan') }}</span>
+									@endif
 								</div>
-                                <div class="row">
-                                    <div class="form-label-group col-md-8">
-                                        <input type="text" name="subdomain" id="subdomain" class="form-control @error('perusahaan') is-invalid @enderror" placeholder="Perusahaan" required>
-                                        <label for="subdomain">Sub Domain</label>
-                                    </div>
-                                    <div class="col-md-4 alert">
-                                        .vendorbest.com
-                                    </div>
-                                </div>
+								<div class="form-label-group">
+									<input value="{{old('domain')}}" type="text" name="domain" id="domain" class="form-control @error('domain') is-invalid @enderror" placeholder="Perusahaan" required>
+									<label for="domain">Sub Domain</label>
+									@if ($errors->has('domain'))
+										<span class="text-danger">{{ $errors->first('domain') }}</span>
+									@endif
+								</div>
+								<div class="form-label-group text-center mb-2">
+									<label for="domain">.vendorbest.com</label>
+									<input type="text" class="form-control" >
+								</div>
+								<div>
+								</div>
 								<button id="btnSubmit" class="btn btn-lg btn-primary btn-block btn-login text-uppercase font-weight-bold mb-2" type="submit">
 									<div id="textDaftar">Daftar</div>
 									<div id="loader" style="display:none !important" class="d-flex align-items-center">

@@ -4,6 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Provinsi;
+use App\Models\BentukUsaha;
+use App\Models\StatusUsaha;
+use App\Models\JenisUsaha;
+use App\Models\TotalModalUsaha;
 use App\Models\User;
 use App\Models\IdentitasVendor;
 use Illuminate\Support\Facades\DB;
@@ -30,7 +34,12 @@ class HomesController extends Controller
 
     public function registration() {
         $provinsi = Provinsi::all();
-        return view('auth/register', compact('provinsi'));
+        $bentukUsaha = BentukUsaha::all();
+        $statusUsaha = StatusUsaha::all();
+        $jenisUsaha = JenisUsaha::all();
+        $totalModalUsaha = TotalModalUsaha::all();
+
+        return view('auth/register', compact('provinsi','bentukUsaha','statusUsaha','jenisUsaha','jenisUsaha','totalModalUsaha'));
     }
     // END AUTH ROUTES HANDLER
 
@@ -61,7 +70,6 @@ class HomesController extends Controller
                 'fax' => 'required|numeric',
                 'nama_pic' => 'required',
                 'telp_pic' => 'required|numeric',
-                'alamat_pic' => 'required|email',
             ],[
                 'name.required'                 => 'Nama harus diisi.',
                 'email.required'                => 'Email harus diisi.',
@@ -89,9 +97,7 @@ class HomesController extends Controller
                 'fax.numeric'                   => 'Fax harus format numeric.',
                 'nama_pic.required'             => 'Nama PIC harus diisi.',
                 'telp_pic.required'             => 'No Telpon PIC harus diisi.',
-                'telp_pic.numeric'              => 'No Telpon PIC harus format numeric.',
-                'alamat_pic.required'           => 'Alamat Email PIC harus diisi.',
-                'alamat_pic.email'              => 'Alamat Email PIC harus format email.',
+                'telp_pic.numeric'              => 'No Telpon PIC harus format numeric.',                
             ]
         );
            
@@ -109,13 +115,13 @@ class HomesController extends Controller
 
             // insert identitas
             IdentitasVendor::create([
-                'bentuk_usaha'         => $request->bentuk_usaha,
+                'bentuk_usaha_id'         => $request->bentuk_usaha,
                 'nama_usaha'           => $request->name,
                 'npwp'                 => $request->npwp,
-                'status_usaha'         => $request->status_usaha,
+                'status_usaha_id'         => $request->status_usaha,
                 'jenis_usaha'          => json_encode($request->jenis_usaha),
                 'produk_usaha'         => $request->produk_usaha,
-                'total_modal_usaha'    => $request->total_modal_usaha,
+                'total_modal_usaha_id'    => $request->total_modal_usaha,
                 'alamat_usaha'         => $request->alamat_usaha,
                 'provinsi_id'          => $request->provinsi_id,
                 'kabupaten_id'         => $request->kabupaten_id,
@@ -125,8 +131,7 @@ class HomesController extends Controller
                 'no_telp'              => $request->no_telp,
                 'fax'                  => $request->fax,
                 'nama_pic'             => $request->fax,
-                'telp_pic'             => $request->telp_pic,
-                'alamat_pic'           => $request->alamat_pic,                
+                'telp_pic'             => $request->telp_pic,              
                 'user_id'              => $userId, 
             ]);
 

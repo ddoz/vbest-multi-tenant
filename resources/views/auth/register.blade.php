@@ -91,15 +91,9 @@
 							<label class="col-sm-4 col-form-label">Bentuk Usaha</label>
 							<div class="col-sm-3">
 								<select class="form-control select2 @error('bentuk_usaha') is-invalid @enderror" required name="bentuk_usaha">
-									<option @if(old('bentuk_usaha')=='CV') selected @endif value="CV">CV</option>
-									<option @if(old('bentuk_usaha')=='FIRMA') selected @endif value="FIRMA">FIRMA</option>
-									<option @if(old('bentuk_usaha')=='KOEPRASI') selected @endif value="KOPERASI">KOPERASI</option>
-									<option @if(old('bentuk_usaha')=='PD') selected @endif value="PD">PD</option>
-									<option @if(old('bentuk_usaha')=='PT') selected @endif value="PT">PT</option>
-									<option @if(old('bentuk_usaha')=='PERKUMPULAN') selected @endif value="PERKUMPULAN">PERKUMPULAN</option>
-									<option @if(old('bentuk_usaha')=='PERORANGAN') selected @endif value="PERORANGAN">PERORANGAN</option>
-									<option @if(old('bentuk_usaha')=='UNIT') selected @endif value="UNIT">UNIT</option>
-									<option @if(old('bentuk_usaha')=='YAYASAN') selected @endif value="YAYASAN">YAYASAN</option>
+									@foreach($bentukUsaha as $bu)
+									<option @if(old('bentuk_usaha')==$bu->id) selected @endif value="{{$bu->id}}">CV</option>
+									@endforeach
 								</select>
 								@if ($errors->has('bentuk_usaha'))
 									<span class="text-danger">{{ $errors->first('bentuk_usaha') }}</span>
@@ -282,15 +276,6 @@
 								<input type="text" value="{{old('telp_pic')}}" class="form-control @error('telp_pic') is-invalid @enderror" name="telp_pic" placeholder="No Telpon PIC">
 								@if ($errors->has('telp_pic'))
 									<span class="text-danger">{{ $errors->first('telp_pic') }}</span>
-								@endif
-							</div>
-						</div>
-						<div class="form-group row">
-							<label class="col-sm-4 col-form-label">Alamat Email PIC</label>
-							<div class="col-sm-6">
-								<input type="email" value="{{old('alamat_pic')}}" class="form-control @error('alamat_pic') is-invalid @enderror" name="alamat_pic" placeholder="Alamat PIC">
-								@if ($errors->has('alamat_pic'))
-									<span class="text-danger">{{ $errors->first('alamat_pic') }}</span>
 								@endif
 							</div>
 						</div>

@@ -135,6 +135,15 @@
 									<li class="nav-item">
 										<a class="nav-link {{ (request()->segment(1) == 'master-kategori-pekerjaan') ? 'active' : '' }}" href="{{route('master-kategori-pekerjaan.index')}}"><i class="ti ti-wallet"></i> Kategori Pekerjaan</a>
 									</li>
+									<li class="nav-item">
+										<a class="nav-link {{ (request()->segment(1) == 'master-bentuk-usaha') ? 'active' : '' }}" href="{{route('master-bentuk-usaha.index')}}"><i class="ti ti-list"></i> Bentuk Usaha</a>
+									</li>
+									<li class="nav-item">
+										<a class="nav-link {{ (request()->segment(1) == 'master-status-usaha') ? 'active' : '' }}" href="{{route('master-status-usaha.index')}}"><i class="ti ti-list"></i> Status Usaha</a>
+									</li>
+									<li class="nav-item">
+										<a class="nav-link {{ (request()->segment(1) == 'master-jenis-usaha') ? 'active' : '' }}" href="{{route('master-jenis-usaha.index')}}"><i class="ti ti-list"></i> Jenis Usaha</a>
+									</li>
 									
 									@endif
 

@@ -11,13 +11,13 @@ class IdentitasVendor extends Model
     use HasFactory;
 
     protected $fillable = [
-        'bentuk_usaha',
+        'bentuk_usaha_id',
         'nama_usaha',
         'npwp',
-        'status_usaha',
+        'status_usaha_id',
         'jenis_usaha',
         'produk_usaha',
-        'total_modal_usaha',
+        'total_modal_usaha_id',
         'alamat_usaha',
         'provinsi_id',
         'kabupaten_id',
@@ -28,7 +28,6 @@ class IdentitasVendor extends Model
         'fax',
         'nama_pic',
         'telp_pic',
-        'alamat_pic',
         'status_dokumen',
         'tgl_verifikasi',
         'verified_id',

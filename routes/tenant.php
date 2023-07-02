@@ -79,6 +79,10 @@ Route::middleware([
 
             Route::resource('master', "App\Http\Controllers\MasterController");
             Route::resource('master-bank', 'App\Http\Controllers\Master\BankController');
+            Route::resource('master-bentuk-usaha', 'App\Http\Controllers\Master\BentukUsahaController');
+            Route::resource('master-status-usaha', 'App\Http\Controllers\Master\StatusUsahaController');
+            Route::resource('master-jenis-usaha', 'App\Http\Controllers\Master\JenisUsahaController');
+            Route::resource('master-modal-usaha', 'App\Http\Controllers\Master\ModalUsahaController');
             Route::resource('master-jenis-izin', 'App\Http\Controllers\Master\JenisIzinController');
             Route::resource('master-jenis-kepemilikan', 'App\Http\Controllers\Master\JenisKepemilikanController');
             Route::resource('master-jenis-kepengurusan', 'App\Http\Controllers\Master\JenisKepengurusanController');

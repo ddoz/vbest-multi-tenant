@@ -15,13 +15,13 @@ return new class extends Migration
     {
         Schema::create('identitas_vendors', function (Blueprint $table) {
             $table->id();
-            $table->string('bentuk_usaha');
+            $table->unsignedBigInteger('bentuk_usaha_id');
             $table->string('nama_usaha');
             $table->string('npwp');
-            $table->string('status_usaha');
-            $table->string('jenis_usaha');
+            $table->unsignedBigInteger('status_usaha_id');            
+            $table->string('jenis_usaha'); //simpan string dari master data
             $table->string('produk_usaha');
-            $table->string('total_modal_usaha');
+            $table->unsignedBigInteger('total_modal_usaha_id');
             $table->string('alamat_usaha');
             $table->unsignedBigInteger('provinsi_id'); //foreign key provinsi
             $table->unsignedBigInteger('kabupaten_id'); //foreign key kabupaten
@@ -32,7 +32,6 @@ return new class extends Migration
             $table->string('fax');
             $table->string('nama_pic');
             $table->string('telp_pic');
-            $table->string('alamat_pic');
             $table->enum('status_dokumen', ['PENDING','VERIFIED','APPROVED','REVISED'])->default('PENDING');
             $table->datetime('tgl_verifikasi')->nullable();
             $table->unsignedBigInteger('verified_id')->nullable(); // foreign key user
