@@ -144,6 +144,9 @@
 									<li class="nav-item">
 										<a class="nav-link {{ (request()->segment(1) == 'master-jenis-usaha') ? 'active' : '' }}" href="{{route('master-jenis-usaha.index')}}"><i class="ti ti-list"></i> Jenis Usaha</a>
 									</li>
+									<li class="nav-item">
+										<a class="nav-link {{ (request()->segment(1) == 'master-modal-usaha') ? 'active' : '' }}" href="{{route('master-modal-usaha.index')}}"><i class="ti ti-list"></i> Modal Usaha</a>
+									</li>
 									
 									@endif
 
